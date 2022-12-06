@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Text Field Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2em;
+align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+    }
+    label {
+      margin-right: 0.5em;
+align-items: center;
+      justify-content: center;
+    }
+    button {
+      margin-left: 1em;
+align-items: center;
+      justify-content: center;
+    }
+    #textFields {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1em 0;
+    }
+    input[type="text"] {
+      margin: 0 1em;
+align-items: center;
+      justify-content: center;
+    }
+    #randomizeButton {
+      margin-top: 1em;
+      text-align: center;
+    }
+    #output {
+      text-align: center;
+      margin-top: 2em;
+    }
+  </style>
+<head>
+  <title>Random Text Field Generator</title>
+</head>
+<body>
+  <h1>Random Text Field Generator</h1>
+  <p>Generate 2 to X text fields and click the button to randomize the fields!</p>
+  <form>
+    <label>Number of text fields: </label>
+    <input type="number" min="2" max="9" id="numFields">
+    <button type="button" onclick="generateFields()">Generate Fields</button>
+  </form>
+  <div id="textFields"></div>
+  <button type="button" onclick="randomize()" id="randomizeButton" disabled>Randomize</button>
+  <div id="output"></div>
+
+  <audio id="randomizeSound" src="https://static.wikia.nocookie.net/justdance/images/5/50/NinjaKids.ogg/revision/latest?cb=20190831130511" preload="auto"></audio>
+
+  <script>
+    function generateFields() {
+      // Get the number of fields from the input
+      const numFields = document.getElementById('numFields').value;
+
+      // Create the text fields
+      const textFields = document.getElementById('textFields');
+      textFields.innerHTML = '';
+      for (let i = 0; i < numFields; i++) {
+        textFields.innerHTML += '<input type="text" placeholder="Enter text here">';
+      }
+
+      // Enable the randomize button
+      document.getElementById('randomizeButton').disabled = false;
+    }
+
+    function randomize() {
+      // Play the sound
+      const audio = document.getElementById('randomizeSound');
+      audio.currentTime = 0;
+      audio.play();
+
+      // Get all the text fields except for the "Number of text fields" input
+      const textFields = document.getElementsByTagName('input');
+      const validFields = [];
+      for (let i = 0; i < textFields.length; i++) {
+        if (textFields[i].id !== 'numFields') {
+          validFields.push(textFields[i]);
+        }
+      }
+
+      // Select a random text field
+      const randomIndex = Math.floor(Math.random() * validFields.length);
+      const randomField = validFields[randomIndex];
+
+      // Display the selected text field with a big font
+      const output = document.getElementById('output');
+      output.innerHTML = '<h2 style="font-size: 4em">' + randomField.value + '</h2>';
+    }
+  </script>
+</body>
+</html>
